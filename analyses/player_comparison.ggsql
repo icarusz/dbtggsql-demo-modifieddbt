@@ -5,7 +5,7 @@ DRAW point
   SETTING size => 4, opacity => 0.85
 DRAW text
   MAPPING player AS label
-  SETTING fontsize => 9
+  SETTING fontsize => 9, vjust => 0, offset => 8, color => '#374151'
 LABEL title => 'Playoff Scoring vs Assists',
       x => 'Points per Game', y => 'Assists per Game',
       color => 'Team'

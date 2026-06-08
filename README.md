@@ -54,6 +54,12 @@ dbt likely has 200,000+ active practitioners. Most of them already know SQL. The
 
 Whether visualization belongs natively in dbt is a question for the dbt community. This repo is a proof of concept: **twelve files, one new node type, no BI tool.**
 
+## sample output
+
+**[shot chart: Knicks vs Cavs →](https://htmlpreview.github.io/?https://github.com/icarusz/dbtggsql-demo-modifieddbt/blob/main/docs/sample_shot_chart.html)** — a chart produced by `dbt build` with no post-hook scripts, no separate render step: the visualization node runs ggsql and writes this file as a pipeline artifact alongside the mart tables.
+
 ## related
 
 **[dbtggsql-demo](https://github.com/icarusz/dbtggsql-demo)** — the original project, using hooks and the ggsql CLI with three output modes (individual charts, static bundle, full Quarto report).
+
+**[dbtggsql-demo-extension-pkg](https://github.com/icarusz/dbtggsql-demo-extension-pkg)** — a pip-installable `dbt-ggsql` community extension that runs the same pipeline without any dbt-core fork.
