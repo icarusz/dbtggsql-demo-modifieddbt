@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 290" width="740" height="290" font-family="'Nunito Sans',system-ui,sans-serif">
+  <defs>
+    <filter id="sh"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#00000012"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#94D2BD"/>
+    </marker>
+  </defs>
+
+  <!-- sources -->
+  <rect x="0" y="28" width="118" height="110" rx="8" fill="#F9F9F9" stroke="#94D2BD" stroke-width="1.5" filter="url(#sh)"/>
+  <rect x="0" y="28" width="118" height="22" rx="8" fill="#64748B"/>
+  <rect x="0" y="39" width="118" height="11" fill="#64748B"/>
+  <text x="59" y="43" text-anchor="middle" font-size="10" font-weight="600" fill="#F9F9F9">sources</text>
+  <text x="59" y="68" text-anchor="middle" font-size="8.5" fill="#64748B">csv / parquet</text>
+  <text x="59" y="84" text-anchor="middle" font-size="8.5" fill="#64748B">fivetran · airbyte</text>
+
+  <!-- sources → dbt -->
+  <line x1="120" y1="83" x2="146" y2="83" stroke="#94D2BD" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- dbt block — expanded to contain ggsql -->
+  <rect x="148" y="10" width="580" height="148" rx="8" fill="#F9F9F9" stroke="#94D2BD" stroke-width="1.5" filter="url(#sh)"/>
+  <rect x="148" y="10" width="580" height="22" rx="8" fill="#FF694B"/>
+  <rect x="148" y="21" width="580" height="11" fill="#FF694B"/>
+  <text x="438" y="26" text-anchor="middle" font-size="10.5" font-weight="600" fill="#F9F9F9">dbt build</text>
+
+  <!-- seeds -->
+  <rect x="158" y="40" width="88" height="62" rx="4" fill="#FFF3F0" stroke="#FFB8A8" stroke-width="1"/>
+  <text x="202" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#FF694B">seeds</text>
+  <text x="202" y="73" text-anchor="middle" font-size="8" fill="#64748B">load csv</text>
+
+  <text x="257" y="73" text-anchor="middle" font-size="10" fill="#FFB8A8">→</text>
+
+  <!-- staging -->
+  <rect x="262" y="40" width="88" height="62" rx="4" fill="#FFF3F0" stroke="#FFB8A8" stroke-width="1"/>
+  <text x="306" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#FF694B">staging</text>
+  <text x="306" y="73" text-anchor="middle" font-size="8" fill="#64748B">clean + cast</text>
+
+  <text x="361" y="73" text-anchor="middle" font-size="10" fill="#FFB8A8">→</text>
+
+  <!-- marts -->
+  <rect x="366" y="40" width="88" height="62" rx="4" fill="#FFF3F0" stroke="#FF694B" stroke-width="1.5"/>
+  <text x="410" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#FF694B">marts</text>
+  <text x="410" y="73" text-anchor="middle" font-size="8" fill="#64748B">analysis tables</text>
+
+  <text x="465" y="73" text-anchor="middle" font-size="10" font-weight="700" fill="#0A9396">→</text>
+
+  <!-- visualization node — inside dbt box -->
+  <rect x="472" y="35" width="246" height="114" rx="6" fill="#DEF1EB" stroke="#0A9396" stroke-width="2" filter="url(#sh)"/>
+  <rect x="472" y="35" width="246" height="20" rx="6" fill="#0A9396"/>
+  <rect x="472" y="46" width="246" height="9" fill="#0A9396"/>
+  <text x="595" y="49" text-anchor="middle" font-size="9.5" font-weight="700" fill="#F9F9F9">visualization  ·  new node type</text>
+  <rect x="482" y="62" width="226" height="52" rx="4" fill="#F9F9F9" stroke="#94D2BD" stroke-width="1"/>
+  <text x="492" y="77" font-size="8" fill="#005F73" font-family="monospace">FROM mart_shot_chart</text>
+  <text x="492" y="91" font-size="8" fill="#005F73" font-family="monospace">VISUALISE loc_x AS x, loc_y AS y</text>
+  <text x="492" y="105" font-size="8" fill="#005F73" font-family="monospace">DRAW point</text>
+  <rect x="482" y="122" width="226" height="18" rx="3" fill="#005F73"/>
+  <text x="595" y="134" text-anchor="middle" font-size="8.5" font-weight="600" fill="#F9F9F9">→  output/charts/shot_chart.html</text>
+
+  <!-- dbt → duckdb -->
+  <line x1="308" y1="158" x2="308" y2="214" stroke="#94D2BD" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- duckdb -->
+  <rect x="178" y="216" width="260" height="58" rx="8" fill="#F9F9F9" stroke="#E9D8A6" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="178" y="216" width="260" height="22" rx="8" fill="#E9D8A6"/>
+  <rect x="178" y="228" width="260" height="10" fill="#E9D8A6"/>
+  <text x="308" y="232" text-anchor="middle" font-size="10" font-weight="600" fill="#001219">duckdb</text>
+  <text x="308" y="254" text-anchor="middle" font-size="8.5" fill="#64748B">nba_finals.duckdb  ·  parquet exports</text>
+
+  <!-- "new native node type" label -->
+  <rect x="472" y="200" width="246" height="26" rx="6" fill="#005F73" filter="url(#sh)"/>
+  <text x="595" y="217" text-anchor="middle" font-size="12" font-weight="700" fill="#F9F9F9" letter-spacing="0.5">new native node type</text>
+</svg>
