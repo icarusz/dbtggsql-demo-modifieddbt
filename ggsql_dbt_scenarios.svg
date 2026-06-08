@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 820" width="980" height="820" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 9 3, 0 6" fill="#94A3B8"/>
+    </marker>
+    <marker id="arr-white" markerWidth="9" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 9 3, 0 6" fill="white"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00000018"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="820" fill="#F1F5F9"/>
+
+  <!-- ── TITLE ── -->
+  <text x="490" y="42" text-anchor="middle" font-size="21" font-weight="700" fill="#0F172A">ggsql + dbt · Integration Scenarios</text>
+  <text x="490" y="62" text-anchor="middle" font-size="12" fill="#64748B">Data engineers add visualizations to their dbt pipeline using SQL they already know</text>
+
+  <!-- ══════════════════════════════════════════════
+       SHARED FOUNDATION ROW
+  ══════════════════════════════════════════════ -->
+
+  <!-- dbt box -->
+  <rect x="100" y="84" width="200" height="64" rx="8" fill="white" filter="url(#shadow)"/>
+  <rect x="100" y="84" width="200" height="26" rx="8" fill="#FF694B"/>
+  <rect x="100" y="98" width="200" height="12" fill="#FF694B"/>
+  <text x="200" y="101" text-anchor="middle" font-size="12" font-weight="600" fill="white">dbt project</text>
+  <text x="200" y="124" text-anchor="middle" font-size="11" fill="#334155">models/staging + marts</text>
+  <text x="200" y="139" text-anchor="middle" font-size="10" fill="#64748B">SQL transforms, ref() lineage</text>
+
+  <!-- arrow dbt → DuckDB -->
+  <line x1="300" y1="116" x2="358" y2="116" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="329" y="110" text-anchor="middle" font-size="9" fill="#94A3B8">dbt run</text>
+
+  <!-- DuckDB box -->
+  <rect x="360" y="84" width="200" height="64" rx="8" fill="white" filter="url(#shadow)"/>
+  <rect x="360" y="84" width="200" height="26" rx="8" fill="#F59E0B"/>
+  <rect x="360" y="98" width="200" height="12" fill="#F59E0B"/>
+  <text x="460" y="101" text-anchor="middle" font-size="12" font-weight="600" fill="white">DuckDB</text>
+  <text x="460" y="124" text-anchor="middle" font-size="11" fill="#334155">Materialized mart tables</text>
+  <text x="460" y="139" text-anchor="middle" font-size="10" fill="#64748B">revenue_by_region, customer_ltv…</text>
+
+  <!-- arrow DuckDB → ggsql -->
+  <line x1="560" y1="116" x2="618" y2="116" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="589" y="110" text-anchor="middle" font-size="9" fill="#94A3B8">query</text>
+
+  <!-- ggsql box -->
+  <rect x="620" y="84" width="220" height="64" rx="8" fill="white" filter="url(#shadow)"/>
+  <rect x="620" y="84" width="220" height="26" rx="8" fill="#3B82F6"/>
+  <rect x="620" y="98" width="220" height="12" fill="#3B82F6"/>
+  <text x="730" y="101" text-anchor="middle" font-size="12" font-weight="600" fill="white">ggsql</text>
+  <text x="730" y="124" text-anchor="middle" font-size="11" fill="#334155">SQL + visualization in one query</text>
+  <text x="730" y="139" text-anchor="middle" font-size="10" fill="#64748B">VISUALISE → DRAW → Vega-Lite</text>
+
+  <!-- ── shared foundation label ── -->
+  <text x="490" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#94A3B8" letter-spacing="1">─────────────  SHARED FOUNDATION  ─────────────</text>
+  <text x="490" y="190" text-anchor="middle" font-size="11" font-weight="600" fill="#64748B">Three ways to connect them:</text>
+
+  <!-- ══════════════════════════════════════════════
+       THREE SCENARIO COLUMNS
+  ══════════════════════════════════════════════ -->
+
+  <!-- Vertical column dividers -->
+  <line x1="334" y1="204" x2="334" y2="790" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="660" y1="204" x2="660" y2="790" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ╔════════════════════════════╗
+       ║  SCENARIO 1 — QUARTO      ║
+       ╚════════════════════════════╝ -->
+
+  <!-- Header -->
+  <rect x="20" y="208" width="300" height="36" rx="6" fill="#0F766E"/>
+  <text x="170" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="white">① Quarto Report</text>
+  <text x="170" y="237" text-anchor="middle" font-size="10" fill="#99F6E4">Easiest · Recommended for hackathon demo</text>
+
+  <!-- HOW box -->
+  <rect x="20" y="256" width="300" height="115" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="20" y="256" width="300" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="20" y="264" width="300" height="12" fill="#E2E8F0"/>
+  <text x="170" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">HOW YOU WRITE IT</text>
+  <text x="34" y="290" font-size="10" fill="#94A3B8" font-family="monospace">report.qmd</text>
+  <text x="34" y="306" font-size="10" fill="#334155" font-family="monospace">```{ggsql}</text>
+  <text x="34" y="320" font-size="10" fill="#3B82F6" font-family="monospace">FROM revenue_by_region</text>
+  <text x="34" y="334" font-size="10" fill="#3B82F6" font-family="monospace">VISUALISE region AS x,</text>
+  <text x="34" y="348" font-size="10" fill="#3B82F6" font-family="monospace">  total_revenue AS y</text>
+  <text x="34" y="362" font-size="10" fill="#3B82F6" font-family="monospace">DRAW bar</text>
+  <text x="34" y="378" font-size="10" fill="#334155" font-family="monospace">```</text>
+
+  <!-- Flow arrow 1 -->
+  <line x1="170" y1="371" x2="170" y2="393" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- HOOK box -->
+  <rect x="20" y="395" width="300" height="70" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="20" y="395" width="300" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="20" y="403" width="300" height="12" fill="#E2E8F0"/>
+  <text x="170" y="409" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">HOW IT HOOKS IN</text>
+  <text x="170" y="430" text-anchor="middle" font-size="11" fill="#334155">dbt run populates DuckDB</text>
+  <text x="170" y="447" text-anchor="middle" font-size="11" fill="#334155">Quarto {ggsql} blocks query</text>
+  <text x="170" y="463" text-anchor="middle" font-size="11" fill="#334155">the same DuckDB database</text>
+
+  <!-- Flow arrow 2 -->
+  <line x1="170" y1="465" x2="170" y2="487" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- RUN box -->
+  <rect x="20" y="489" width="300" height="56" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="20" y="489" width="300" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="20" y="497" width="300" height="12" fill="#E2E8F0"/>
+  <text x="170" y="503" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">EXECUTION</text>
+  <text x="34" y="524" font-size="10" fill="#334155" font-family="monospace">dbt run &amp;&amp; quarto render report.qmd</text>
+  <text x="170" y="540" text-anchor="middle" font-size="10" fill="#64748B">One command, CI-friendly</text>
+
+  <!-- Flow arrow 3 -->
+  <line x1="170" y1="545" x2="170" y2="567" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- OUTPUT box -->
+  <rect x="20" y="569" width="300" height="56" rx="6" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="170" y="591" text-anchor="middle" font-size="12" font-weight="600" fill="#15803D">HTML Report</text>
+  <text x="170" y="607" text-anchor="middle" font-size="11" fill="#16A34A">Narrative + charts in one doc</text>
+  <text x="170" y="620" text-anchor="middle" font-size="10" fill="#64748B">Publishable to Posit Connect</text>
+
+  <!-- EFFORT badge -->
+  <rect x="60" y="644" width="220" height="28" rx="14" fill="#0F766E"/>
+  <text x="170" y="662" text-anchor="middle" font-size="11" font-weight="600" fill="white">Effort: Low  ·  Demo-able in hours</text>
+
+
+  <!-- ╔════════════════════════════╗
+       ║  SCENARIO 2 — CUSTOM MAT  ║
+       ╚════════════════════════════╝ -->
+
+  <!-- Header -->
+  <rect x="346" y="208" width="300" height="36" rx="6" fill="#7C3AED"/>
+  <text x="496" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="white">② Custom Materialization</text>
+  <text x="496" y="237" text-anchor="middle" font-size="10" fill="#DDD6FE">Most ambitious · New idea in dbt ecosystem</text>
+
+  <!-- HOW box -->
+  <rect x="346" y="256" width="300" height="115" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="346" y="256" width="300" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="346" y="264" width="300" height="12" fill="#E2E8F0"/>
+  <text x="496" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">HOW YOU WRITE IT</text>
+  <text x="360" y="290" font-size="10" fill="#94A3B8" font-family="monospace">models/marts/revenue_viz.sql</text>
+  <text x="360" y="306" font-size="10" fill="#64748B" font-family="monospace">-- config: materialized='visualization'</text>
+  <text x="360" y="320" font-size="10" fill="#7C3AED" font-family="monospace">FROM {{ ref('revenue_by_region') }}</text>
+  <text x="360" y="334" font-size="10" fill="#7C3AED" font-family="monospace">VISUALISE region AS x,</text>
+  <text x="360" y="348" font-size="10" fill="#7C3AED" font-family="monospace">  total_revenue AS y</text>
+  <text x="360" y="362" font-size="10" fill="#7C3AED" font-family="monospace">DRAW bar</text>
+  <text x="360" y="378" font-size="10" fill="#94A3B8" font-family="monospace">-- lives alongside SQL models</text>
+
+  <!-- Flow arrow -->
+  <line x1="496" y1="371" x2="496" y2="393" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- HOOK box -->
+  <rect x="346" y="395" width="300" height="70" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="346" y="395" width="300" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="346" y="403" width="300" height="12" fill="#E2E8F0"/>
+  <text x="496" y="409" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">HOW IT HOOKS IN</text>
+  <text x="496" y="430" text-anchor="middle" font-size="11" fill="#334155">Custom dbt macro intercepts</text>
+  <text x="496" y="447" text-anchor="middle" font-size="11" fill="#334155">"visualization" materialization,</text>
+  <text x="496" y="463" text-anchor="middle" font-size="11" fill="#334155">calls ggsql CLI instead of CREATE TABLE</text>
+
+  <!-- Flow arrow -->
+  <line x1="496" y1="465" x2="496" y2="487" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- RUN box -->
+  <rect x="346" y="489" width="300" height="56" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="346" y="489" width="300" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="346" y="497" width="300" height="12" fill="#E2E8F0"/>
+  <text x="496" y="503" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">EXECUTION</text>
+  <text x="360" y="524" font-size="10" fill="#334155" font-family="monospace">dbt run  ← that's it</text>
+  <text x="496" y="540" text-anchor="middle" font-size="10" fill="#64748B">Viz is a first-class dbt artifact</text>
+
+  <!-- Flow arrow -->
+  <line x1="496" y1="545" x2="496" y2="567" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- OUTPUT box -->
+  <rect x="346" y="569" width="300" height="56" rx="6" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="496" y="591" text-anchor="middle" font-size="12" font-weight="600" fill="#15803D">Vega-Lite JSON per model</text>
+  <text x="496" y="607" text-anchor="middle" font-size="11" fill="#16A34A">Charts live in dbt target/ alongside tables</text>
+  <text x="496" y="620" text-anchor="middle" font-size="10" fill="#64748B">Serveable from dbt docs site</text>
+
+  <!-- EFFORT badge -->
+  <rect x="386" y="644" width="220" height="28" rx="14" fill="#7C3AED"/>
+  <text x="496" y="662" text-anchor="middle" font-size="11" font-weight="600" fill="white">Effort: High  ·  The big pitch</text>
+
+
+  <!-- ╔════════════════════════════╗
+       ║  SCENARIO 3 — analyses/   ║
+       ╚════════════════════════════╝ -->
+
+  <!-- Header -->
+  <rect x="672" y="208" width="288" height="36" rx="6" fill="#B45309"/>
+  <text x="816" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="white">③ analyses/ + CLI post-step</text>
+  <text x="816" y="237" text-anchor="middle" font-size="10" fill="#FDE68A">Middle ground · Uses existing dbt convention</text>
+
+  <!-- HOW box -->
+  <rect x="672" y="256" width="288" height="115" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="672" y="256" width="288" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="672" y="264" width="288" height="12" fill="#E2E8F0"/>
+  <text x="816" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">HOW YOU WRITE IT</text>
+  <text x="686" y="290" font-size="10" fill="#94A3B8" font-family="monospace">analyses/revenue_viz.ggsql</text>
+  <text x="686" y="306" font-size="10" fill="#B45309" font-family="monospace">FROM revenue_by_region</text>
+  <text x="686" y="320" font-size="10" fill="#B45309" font-family="monospace">VISUALISE region AS x,</text>
+  <text x="686" y="334" font-size="10" fill="#B45309" font-family="monospace">  total_revenue AS y</text>
+  <text x="686" y="348" font-size="10" fill="#B45309" font-family="monospace">DRAW bar</text>
+  <text x="686" y="362" font-size="10" fill="#B45309" font-family="monospace">LABEL title =&gt; 'Revenue'</text>
+  <text x="686" y="378" font-size="10" fill="#94A3B8" font-family="monospace">-- plain .ggsql file, no dbt macros</text>
+
+  <!-- Flow arrow -->
+  <line x1="816" y1="371" x2="816" y2="393" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- HOOK box -->
+  <rect x="672" y="395" width="288" height="70" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="672" y="395" width="288" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="672" y="403" width="288" height="12" fill="#E2E8F0"/>
+  <text x="816" y="409" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">HOW IT HOOKS IN</text>
+  <text x="816" y="430" text-anchor="middle" font-size="11" fill="#334155">dbt analyses/ is a known folder</text>
+  <text x="816" y="447" text-anchor="middle" font-size="11" fill="#334155">for "exploratory SQL". ggsql files</text>
+  <text x="816" y="463" text-anchor="middle" font-size="11" fill="#334155">run via CLI after dbt populates DB</text>
+
+  <!-- Flow arrow -->
+  <line x1="816" y1="465" x2="816" y2="487" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- RUN box -->
+  <rect x="672" y="489" width="288" height="56" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="672" y="489" width="288" height="20" rx="6" fill="#E2E8F0"/>
+  <rect x="672" y="497" width="288" height="12" fill="#E2E8F0"/>
+  <text x="816" y="503" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">EXECUTION</text>
+  <text x="686" y="524" font-size="10" fill="#334155" font-family="monospace">dbt run &amp;&amp; ggsql run analyses/*.ggsql</text>
+  <text x="816" y="540" text-anchor="middle" font-size="10" fill="#64748B">Simple Makefile / CI step</text>
+
+  <!-- Flow arrow -->
+  <line x1="816" y1="545" x2="816" y2="567" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- OUTPUT box -->
+  <rect x="672" y="569" width="288" height="56" rx="6" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="816" y="591" text-anchor="middle" font-size="12" font-weight="600" fill="#15803D">HTML charts per .ggsql file</text>
+  <text x="816" y="607" text-anchor="middle" font-size="11" fill="#16A34A">Light-weight, no Quarto required</text>
+  <text x="816" y="620" text-anchor="middle" font-size="10" fill="#64748B">Wrappable into a dbt on-run-end hook</text>
+
+  <!-- EFFORT badge -->
+  <rect x="716" y="644" width="200" height="28" rx="14" fill="#B45309"/>
+  <text x="816" y="662" text-anchor="middle" font-size="11" font-weight="600" fill="white">Effort: Medium  ·  CI-ready</text>
+
+
+  <!-- ══════════════════════════════════════════════
+       BOTTOM KEY INSIGHT
+  ══════════════════════════════════════════════ -->
+  <rect x="20" y="690" width="940" height="36" rx="8" fill="#1E293B"/>
+  <text x="490" y="705" text-anchor="middle" font-size="11" font-weight="600" fill="#94A3B8">KEY INSIGHT: </text>
+  <text x="490" y="705" text-anchor="middle" font-size="11" fill="#F8FAFC">                          dbt's DuckDB backend = ggsql's DuckDB backend — same database, no data export needed</text>
+
+  <!-- Subtitle clarification for key insight -->
+  <text x="490" y="720" text-anchor="middle" font-size="10" fill="#64748B">Engineers write SQL they already know · Analysts get charts without Tableau/Looker · All three scenarios are composable</text>
+</svg>

@@ -1,0 +1,29 @@
+---
+title: "ggsql Demo"
+format: html
+jupyter: ggsql
+---
+
+## Scatter Plot
+
+```{ggsql}
+VISUALIZE bill_len AS x, bill_dep AS y FROM ggsql:penguins
+DRAW point
+```
+
+## Color by Species
+
+```{ggsql}
+VISUALIZE bill_len AS x, bill_dep AS y, species AS color FROM ggsql:penguins
+DRAW point
+LABEL title => 'Bill Dimensions by Species', x => 'Bill Length (mm)', y => 'Bill Depth (mm)'
+```
+
+## Faceted by Island
+
+```{ggsql}
+VISUALIZE bill_len AS x, bill_dep AS y, species AS color FROM ggsql:penguins
+DRAW point
+FACET island
+LABEL title => 'Bill Dimensions by Island'
+```

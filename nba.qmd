@@ -1,0 +1,55 @@
+---
+title: "NBA 2025-26 Player Stats"
+format: html
+jupyter: ggsql
+---
+
+## Points per Turnover
+
+Scoring efficiency leaders for the 2025-26 regular season (min. 30 min/game).
+
+```{ggsql}
+SELECT PLAYER, CAST(PTS AS FLOAT) / TOV AS pts_per_tov
+FROM 'nba_player_stats_2026.csv'
+WHERE GP >= 30 AND CAST(MIN AS FLOAT) / GP >= 30 AND TOV > 0
+ORDER BY pts_per_tov DESC
+LIMIT 20
+VISUALISE PLAYER AS x, pts_per_tov AS y
+DRAW bar
+LABEL title => 'Points Per Turnover Leaders', x => 'Player', y => 'PTS / TOV'
+```
+
+## Scoring vs. Assists
+
+```{ggsql}
+SELECT PTS / GP AS ppg, AST / GP AS apg, EFF AS efficiency, PLAYER
+FROM 'nba_player_stats_2026.csv'
+WHERE GP >= 30 AND CAST(MIN AS FLOAT) / GP >= 30
+VISUALISE ppg AS x, apg AS y, efficiency AS color
+DRAW point
+LABEL title => 'Scoring vs. Assists Per Game', x => 'Points Per Game', y => 'Assists Per Game'
+```
+
+## Three-Point Volume vs. Efficiency
+
+Players with at least 100 three-point attempts.
+
+```{ggsql}
+SELECT FG3A AS attempts, FG3_PCT AS pct, PLAYER, TEAM
+FROM 'nba_player_stats_2026.csv'
+WHERE GP >= 30 AND CAST(MIN AS FLOAT) / GP >= 30 AND FG3A >= 100
+VISUALISE attempts AS x, pct AS y
+DRAW point
+LABEL title => '3PT Attempts vs. 3PT%', x => '3-Point Attempts', y => '3-Point %'
+```
+
+## Rebounds vs. Blocks
+
+```{ggsql}
+SELECT REB / GP AS rpg, BLK / GP AS bpg, PTS / GP AS ppg
+FROM 'nba_player_stats_2026.csv'
+WHERE GP >= 30 AND CAST(MIN AS FLOAT) / GP >= 30
+VISUALISE rpg AS x, bpg AS y, ppg AS color
+DRAW point
+LABEL title => 'Rebounds vs. Blocks Per Game', x => 'Rebounds Per Game', y => 'Blocks Per Game'
+```

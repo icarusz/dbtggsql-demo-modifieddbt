@@ -1,0 +1,339 @@
+---
+title: "2026 NBA Finals · Knicks vs Spurs"
+subtitle: "A ggsql + dbt data story"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 2
+    toc-title: "Charts"
+    embed-resources: true
+jupyter: ggsql
+---
+
+```{bash}
+# Option A trigger: runs dbt before ggsql cells execute.
+# Controlled by RUN_DBT env var so local dev (make quarto) skips it
+# while Connect scheduled renders run the full pipeline.
+#
+#   Local:    make                        → skips this cell (RUN_DBT unset)
+#   Connect:  RUN_DBT=true quarto render  → runs dbt build first
+#
+if [ "${RUN_DBT}" = "true" ]; then
+  echo "▶ Running dbt pipeline..."
+  uv run dbt build \
+    --profiles-dir nba_dbt \
+    --project-dir  nba_dbt
+  echo "✓ dbt build complete"
+fi
+```
+
+## Shot Charts — Spurs Road to the Finals
+
+### vs Oklahoma City Thunder · Western Conference Finals
+
+The Spurs' hardest test: OKC finished 65–17, the best record in the West.
+Wembanyama logged 60 blocks across the playoffs — beaten only by Tim Duncan in 2007.
+
+```{ggsql}
+SELECT loc_x, loc_y, made_label, category
+FROM 'nba_dbt/exports/mart_shot_chart.parquet'
+WHERE team = 'San Antonio Spurs'
+  AND opponent = 'Oklahoma City Thunder'
+VISUALISE loc_x AS x, loc_y AS y, made_label AS color
+DRAW point
+  SETTING opacity => 0.65, size => 3
+SCALE color
+  FROM ['Made', 'Missed']
+  TO ['#22c55e', '#ef4444']
+LABEL title => 'Spurs vs OKC — WCF Shot Chart',
+      x => 'Court Width', y => 'Distance from Basket',
+      color => ''
+```
+
+### vs Minnesota Timberwolves · Second Round
+
+```{ggsql}
+SELECT loc_x, loc_y, made_label
+FROM 'nba_dbt/exports/mart_shot_chart.parquet'
+WHERE team = 'San Antonio Spurs'
+  AND opponent = 'Minnesota Timberwolves'
+VISUALISE loc_x AS x, loc_y AS y, made_label AS color
+DRAW point
+  SETTING opacity => 0.65, size => 3
+SCALE color
+  FROM ['Made', 'Missed']
+  TO ['#22c55e', '#ef4444']
+LABEL title => 'Spurs vs Minnesota — R2 Shot Chart',
+      x => 'Court Width', y => 'Distance from Basket',
+      color => ''
+```
+
+### vs Portland Trail Blazers · First Round
+
+```{ggsql}
+SELECT loc_x, loc_y, made_label
+FROM 'nba_dbt/exports/mart_shot_chart.parquet'
+WHERE team = 'San Antonio Spurs'
+  AND opponent = 'Portland Trail Blazers'
+VISUALISE loc_x AS x, loc_y AS y, made_label AS color
+DRAW point
+  SETTING opacity => 0.65, size => 3
+SCALE color
+  FROM ['Made', 'Missed']
+  TO ['#22c55e', '#ef4444']
+LABEL title => 'Spurs vs Portland — R1 Shot Chart',
+      x => 'Court Width', y => 'Distance from Basket',
+      color => ''
+```
+
+---
+
+## Spurs Playoff Road — Game by Game
+
+Three rounds, eighteen games. Wembanyama and Co. dropped games in every series
+but never surrendered control. The Thunder series (games 15–21) shows why Game 7
+on the road felt like an upset — it was.
+
+```{ggsql}
+SELECT playoff_game_num, margin, round, opponent
+FROM 'nba_dbt/exports/mart_game_scores.parquet'
+WHERE team = 'San Antonio Spurs'
+VISUALISE playoff_game_num AS x, margin AS y, round AS color
+DRAW bar
+  SETTING position => 'identity'
+PLACE rule
+  SETTING y => 0, color => '#334155', linewidth => 0.5
+LABEL title => 'Spurs — Playoff Margin Game by Game',
+      x => 'Playoff Game #', y => 'Point Margin (+ = win)',
+      color => 'Round'
+```
+
+---
+
+## Shot Charts — Knicks Road to the Finals
+
+### vs Cleveland Cavaliers · Eastern Conference Finals
+
+The Knicks swept the #1 seed Cavaliers. Their paint dominance
+(68.1% in the restricted area) shows up clearly here.
+
+```{ggsql}
+SELECT loc_x, loc_y, made_label
+FROM 'nba_dbt/exports/mart_shot_chart.parquet'
+WHERE team = 'New York Knicks'
+  AND opponent = 'Cleveland Cavaliers'
+VISUALISE loc_x AS x, loc_y AS y, made_label AS color
+DRAW point
+  SETTING opacity => 0.65, size => 3
+SCALE color
+  FROM ['Made', 'Missed']
+  TO ['#22c55e', '#ef4444']
+LABEL title => 'Knicks vs Cleveland — ECF Shot Chart',
+      x => 'Court Width', y => 'Distance from Basket',
+      color => ''
+```
+
+### vs Philadelphia 76ers · Second Round
+
+```{ggsql}
+SELECT loc_x, loc_y, made_label
+FROM 'nba_dbt/exports/mart_shot_chart.parquet'
+WHERE team = 'New York Knicks'
+  AND opponent = 'Philadelphia 76ers'
+VISUALISE loc_x AS x, loc_y AS y, made_label AS color
+DRAW point
+  SETTING opacity => 0.65, size => 3
+SCALE color
+  FROM ['Made', 'Missed']
+  TO ['#22c55e', '#ef4444']
+LABEL title => 'Knicks vs Philadelphia — R2 Shot Chart',
+      x => 'Court Width', y => 'Distance from Basket',
+      color => ''
+```
+
+### vs Atlanta Hawks · First Round
+
+```{ggsql}
+SELECT loc_x, loc_y, made_label
+FROM 'nba_dbt/exports/mart_shot_chart.parquet'
+WHERE team = 'New York Knicks'
+  AND opponent = 'Atlanta Hawks'
+VISUALISE loc_x AS x, loc_y AS y, made_label AS color
+DRAW point
+  SETTING opacity => 0.65, size => 3
+SCALE color
+  FROM ['Made', 'Missed']
+  TO ['#22c55e', '#ef4444']
+LABEL title => 'Knicks vs Atlanta — R1 Shot Chart',
+      x => 'Court Width', y => 'Distance from Basket',
+      color => ''
+```
+
+---
+
+## Knicks Playoff Road — Game by Game
+
+Twelve wins, two losses — both in the first round against Atlanta before the Knicks
+shifted into a different gear entirely. Every game from the second round onward was a win,
+with margins that only grew.
+
+```{ggsql}
+SELECT playoff_game_num, margin, round, opponent
+FROM 'nba_dbt/exports/mart_game_scores.parquet'
+WHERE team = 'New York Knicks'
+VISUALISE playoff_game_num AS x, margin AS y, round AS color
+DRAW bar
+  SETTING position => 'identity'
+PLACE rule
+  SETTING y => 0, color => '#334155', linewidth => 0.5
+LABEL title => 'Knicks — Playoff Margin Game by Game',
+      x => 'Playoff Game #', y => 'Point Margin (+ = win)',
+      color => 'Round'
+```
+
+---
+
+## Shot Profile by Zone
+
+Where each team shoots from — and how efficiently.
+
+```{ggsql}
+SELECT shot_zone, fg_pct, team
+FROM 'nba_dbt/exports/mart_shot_zones.parquet'
+WHERE stat_type = 'playoffs'
+ORDER BY zone_order
+VISUALISE shot_zone AS x, fg_pct AS y, team AS color
+DRAW bar
+  SETTING position => 'dodge'
+LABEL title => 'Playoff FG% by Shot Zone',
+      x => '', y => 'Field Goal %', color => 'Team'
+```
+
+```{ggsql}
+SELECT shot_zone, pct_of_fga, team
+FROM 'nba_dbt/exports/mart_shot_zones.parquet'
+WHERE stat_type = 'playoffs'
+ORDER BY zone_order
+VISUALISE shot_zone AS x, pct_of_fga AS y, team AS color
+DRAW bar
+  SETTING position => 'dodge'
+LABEL title => 'Shot Distribution by Zone (% of FGA)',
+      x => '', y => '% of Attempts', color => 'Team'
+```
+
+---
+
+## Path to the Finals — Opponent Difficulty
+
+The Spurs had the harder road. OKC at 65–17 (+11.8 net rating) was
+the toughest opponent either team faced.
+
+```{ggsql}
+SELECT opponent, team, avg_margin, round
+FROM 'nba_dbt/exports/mart_playoff_path.parquet'
+ORDER BY team, round_num
+VISUALISE opponent AS x, avg_margin AS y, team AS color
+DRAW bar
+  SETTING position => 'dodge'
+PLACE rule
+  SETTING y => 0, color => '#64748b', linewidth => 0.5
+LABEL title => 'Average Point Margin by Series',
+      x => 'Opponent', y => 'Avg Margin (positive = won by)', color => 'Team'
+```
+
+```{ggsql}
+SELECT opponent, team, opp_wins, opp_net_rtg, difficulty_score
+FROM 'nba_dbt/exports/mart_playoff_path.parquet'
+VISUALISE opp_wins AS x, difficulty_score AS y, team AS color
+DRAW point
+  SETTING size => 5, opacity => 0.85
+DRAW text
+  MAPPING opponent AS label
+  SETTING fontsize => 9
+LABEL title => 'Opponent Strength — Wins vs Difficulty Score',
+      x => 'Opponent Regular Season Wins', y => 'Difficulty Score', color => 'Team'
+```
+
+---
+
+## Offense & Defense — Regular Season vs Playoffs
+
+The Knicks held opponents to 30% from three in the playoffs — nearly five points
+below their own regular-season three-point defense. The Spurs' Wembanyama effect
+compressed opponents' paint attempts throughout, but the three-point line was where
+the Knicks separated themselves defensively.
+
+```{ggsql}
+SELECT team, side, period, value
+FROM 'nba_dbt/exports/mart_efficiency_comparison.parquet'
+WHERE category = 'Scoring'
+VISUALISE side AS x, value AS y, period AS color
+DRAW bar
+  SETTING position => 'dodge'
+FACET team
+LABEL title => 'Scoring Offense & Defense — Regular Season vs Playoffs',
+      x => '', y => 'Points per Game', color => ''
+```
+
+```{ggsql}
+SELECT team, side, period, value
+FROM 'nba_dbt/exports/mart_efficiency_comparison.parquet'
+WHERE category = '3PT Shooting'
+VISUALISE side AS x, value AS y, period AS color
+DRAW bar
+  SETTING position => 'dodge'
+FACET team
+LABEL title => '3-Point Shooting — Regular Season vs Playoffs',
+      x => '', y => '3PT% (defense = opponent %)', color => ''
+```
+
+---
+
+## Player Comparison
+
+```{ggsql}
+SELECT player, team, playoff_ppg, playoff_apg, playoff_rpg
+FROM 'nba_dbt/exports/mart_player_comparison.parquet'
+VISUALISE playoff_ppg AS x, playoff_apg AS y, team AS color
+DRAW point
+  SETTING size => 4, opacity => 0.85
+DRAW text
+  MAPPING player AS label
+  SETTING fontsize => 9
+LABEL title => 'Playoff Scoring vs Assists',
+      x => 'Points per Game', y => 'Assists per Game', color => 'Team'
+```
+
+```{ggsql}
+SELECT player, team, ppg_delta
+FROM 'nba_dbt/exports/mart_player_comparison.parquet'
+ORDER BY team, ppg_delta DESC
+VISUALISE player AS x, ppg_delta AS y, team AS color
+DRAW bar
+  SETTING position => 'identity'
+PLACE rule
+  SETTING y => 0, color => '#64748b', linewidth => 0.5
+LABEL title => 'Playoffs vs Regular Season — PPG Change',
+      x => '', y => 'PPG Δ (+ = better in playoffs)', color => 'Team'
+```
+
+---
+
+## Regular Season Head-to-Head
+
+Brunson averaged 26 points across the three regular-season meetings.
+The Knicks won 2 of 3, including the decisive March blowout.
+
+```{ggsql}
+SELECT context, 'New York Knicks' AS team, knicks_score AS score
+FROM 'nba_dbt/seeds/raw_head_to_head.csv'
+UNION ALL
+SELECT context, 'San Antonio Spurs' AS team, spurs_score AS score
+FROM 'nba_dbt/seeds/raw_head_to_head.csv'
+VISUALISE context AS x, score AS y, team AS color
+DRAW bar
+  SETTING position => 'dodge'
+LABEL title => 'Regular Season Head-to-Head Scores',
+      x => '', y => 'Points', color => 'Team'
+```

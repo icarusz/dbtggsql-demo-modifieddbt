@@ -1,0 +1,11 @@
+project:
+  title: "ggsql Demo"
+  type: default
+
+format:
+  html:
+    theme: cosmo
+    code-fold: false
+    toc: true
+
+jupyter: ggsql
